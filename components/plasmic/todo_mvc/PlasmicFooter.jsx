@@ -14,7 +14,7 @@ import {
   hasVariant,
   classNames,
   createPlasmicElementProxy,
-  deriveRenderOpts
+  deriveRenderOpts,
 } from "@plasmicapp/react-web";
 import ToggleButton from "../../ToggleButton"; // plasmic-import: Vy5Rjsc6yec_k/component
 import "@plasmicapp/react-web/lib/plasmic.css";
@@ -27,7 +27,16 @@ export const PlasmicFooter__VariantProps = new Array("state");
 export const PlasmicFooter__ArgProps = new Array("count");
 
 function PlasmicFooter__RenderFunc(props) {
-  const { variants, args, overrides, forNode } = props;
+  const {
+    variants,
+    args,
+    overrides,
+    forNode,
+    taskCount,
+    onFilterChange,
+    filter,
+    onDelete,
+  } = props;
   return (
     <div
       data-plasmic-name={"footerContainer"}
@@ -67,12 +76,12 @@ function PlasmicFooter__RenderFunc(props) {
               variants,
               "state",
               "singularLeft"
-            )
+            ),
           })}
         >
           <p.PlasmicSlot
-            defaultContents={"2"}
-            value={args.count}
+            defaultContents={"0"}
+            value={taskCount}
             className={classNames(sty.slotCount, {
               [sty.slotCount__state_hasCompleted]: hasVariant(
                 variants,
@@ -84,7 +93,7 @@ function PlasmicFooter__RenderFunc(props) {
                 variants,
                 "state",
                 "singularLeft"
-              )
+              ),
             })}
           />
 
@@ -111,7 +120,7 @@ function PlasmicFooter__RenderFunc(props) {
                     variants,
                     "state",
                     "singularLeft"
-                  )
+                  ),
                 }
               )}
             >
@@ -130,19 +139,24 @@ function PlasmicFooter__RenderFunc(props) {
       >
         <ToggleButton
           className={classNames("__wab_instance", sty.toggleButton__mybRd)}
-          state={"selected"}
+          state={filter === "All" ? "selected" : undefined}
+          onClick={() => onFilterChange("All")}
         >
           {"All"}
         </ToggleButton>
 
         <ToggleButton
           className={classNames("__wab_instance", sty.toggleButton__xtSgh)}
+          state={filter === "Completed" ? "selected" : undefined}
+          onClick={() => onFilterChange("Completed")}
         >
           {"Completed"}
         </ToggleButton>
 
         <ToggleButton
           className={classNames("__wab_instance", sty.toggleButton__rZywj)}
+          state={filter === "Active" ? "selected" : undefined}
+          onClick={() => onFilterChange("Active")}
         >
           {"Active"}
         </ToggleButton>
@@ -159,9 +173,10 @@ function PlasmicFooter__RenderFunc(props) {
                 variants,
                 "state",
                 "hasCompleted"
-              )
+              ),
             }
           )}
+          onClick={() => onDelete()}
         >
           {"Clear completed"}
         </div>
@@ -171,7 +186,7 @@ function PlasmicFooter__RenderFunc(props) {
 }
 
 const PlasmicDescendants = {
-  footerContainer: ["footerContainer"]
+  footerContainer: ["footerContainer"],
 };
 
 function makeNodeComponent(nodeName) {
@@ -180,14 +195,18 @@ function makeNodeComponent(nodeName) {
       name: nodeName,
       descendantNames: [...PlasmicDescendants[nodeName]],
       internalArgPropNames: PlasmicFooter__ArgProps,
-      internalVariantPropNames: PlasmicFooter__VariantProps
+      internalVariantPropNames: PlasmicFooter__VariantProps,
     });
 
     return PlasmicFooter__RenderFunc({
       variants,
       args,
       overrides,
-      forNode: nodeName
+      forNode: nodeName,
+      taskCount: props.taskCount,
+      onFilterChange: props.onFilterChange,
+      filter: props.filter,
+      onDelete: props.onDelete,
     });
   };
   if (nodeName === "footerContainer") {
@@ -205,7 +224,7 @@ export const PlasmicFooter = Object.assign(
     // Helper components rendering sub-elements
     // Metadata about props expected for PlasmicFooter
     internalVariantProps: PlasmicFooter__VariantProps,
-    internalArgProps: PlasmicFooter__ArgProps
+    internalArgProps: PlasmicFooter__ArgProps,
   }
 );
 

@@ -76,14 +76,46 @@ export const PlasmicTodoApp__ArgProps = new Array();
                   </Task>
 
 */
+/**
+() => {
+  const newTasks = [...tasks];
+  const changes = newTasks.find((t) => t === task);
+
+  const index = array.indexOf({ changes });
+  if (index > -1) {
+    tasks.splice(index, 1);
+  }
+
+  setTasks([...newTasks]);
+}
+ */
 
 function PlasmicTodoApp__RenderFunc(props) {
   const { variants, args, overrides, forNode } = props;
   const [tasks, setTasks] = React.useState([]);
+  const [filter, setFilter] = React.useState("All");
   const globalVariants = ensureGlobalVariants({
     theme: React.useContext(ThemeContext),
   });
 
+  const filteredTasks = tasks.filter((t) => {
+    if (!t.completed && filter === "Active") {
+      return true;
+    }
+    if (t.completed && filter === "Completed") {
+      return true;
+    }
+    if (filter === "All") {
+      return true;
+    }
+    return false;
+  });
+  const activeTasks = tasks.filter((t) => {
+    if (!t.completed) {
+      return true;
+    }
+    return false;
+  });
   return (
     <React.Fragment>
       <Head>
@@ -127,7 +159,7 @@ function PlasmicTodoApp__RenderFunc(props) {
               }
             )}
           >
-            {"todos"}
+            {" Proceso de software todos"}
           </div>
 
           <div
@@ -193,7 +225,7 @@ function PlasmicTodoApp__RenderFunc(props) {
                     ),
                   })}
                 >
-                  {tasks.map((task) => {
+                  {filteredTasks.map((task) => {
                     return (
                       <Task
                         className={classNames(
@@ -209,6 +241,17 @@ function PlasmicTodoApp__RenderFunc(props) {
 
                           changes.completed = !changes.completed;
 
+                          setTasks([...newTasks]);
+                        }}
+                        onDelete={() => {
+                          const newTasks = [...tasks];
+
+                          const index = newTasks.findIndex(
+                            (t) => t.id === task.id
+                          );
+                          if (index > -1) {
+                            newTasks.splice(index, 1);
+                          }
                           setTasks([...newTasks]);
                         }}
                       >
@@ -229,8 +272,13 @@ function PlasmicTodoApp__RenderFunc(props) {
                       "empty"
                     ),
                   })}
-                  count={"2"}
+                  taskCount={activeTasks.length}
                   state={["hasCompleted"]}
+                  onFilterChange={(status) => setFilter(status)}
+                  filter={filter}
+                  onDelete={() => {
+                    setTasks([...activeTasks]);
+                  }}
                 />
               ) : null}
             </div>

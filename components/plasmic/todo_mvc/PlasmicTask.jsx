@@ -28,7 +28,7 @@ export const PlasmicTask__VariantProps = new Array("state");
 export const PlasmicTask__ArgProps = new Array("children");
 
 function PlasmicTask__RenderFunc(props) {
-  const { variants, args, overrides, forNode, onToggleTask } = props;
+  const { variants, args, overrides, forNode, onToggleTask, onDelete } = props;
   const globalVariants = ensureGlobalVariants({
     theme: React.useContext(ThemeContext),
   });
@@ -39,19 +39,24 @@ function PlasmicTask__RenderFunc(props) {
       data-plasmic-override={overrides.root}
       data-plasmic-root={true}
       data-plasmic-for-node={forNode}
-      className={classNames(defaultcss.all, projectcss.root_reset, sty.root, {
-        [sty.root__global_theme_dark]: hasVariant(
-          globalVariants,
-          "theme",
-          "dark"
-        ),
+      className={classNames(
+        defaultcss.all,
+        projectcss.root_onToggleTask,
+        sty.root,
+        {
+          [sty.root__global_theme_dark]: hasVariant(
+            globalVariants,
+            "theme",
+            "dark"
+          ),
 
-        [sty.root__state_checked]: hasVariant(variants, "state", "checked"),
-        [sty.root__state_editing]: hasVariant(variants, "state", "editing"),
-        [sty.root__state_editing_global_theme_dark]:
-          hasVariant(variants, "state", "editing") &&
-          hasVariant(globalVariants, "theme", "dark"),
-      })}
+          [sty.root__state_checked]: hasVariant(variants, "state", "checked"),
+          [sty.root__state_editing]: hasVariant(variants, "state", "editing"),
+          [sty.root__state_editing_global_theme_dark]:
+            hasVariant(variants, "state", "editing") &&
+            hasVariant(globalVariants, "theme", "dark"),
+        }
+      )}
     >
       <div
         className={classNames(defaultcss.all, sty.box__dxfYl, {
@@ -226,8 +231,9 @@ function PlasmicTask__RenderFunc(props) {
                   ),
                 }
               )}
+              onClick={onDelete}
             >
-              {"×"}
+              {"x"}
             </button>
           </div>
         ) : null}
@@ -258,6 +264,7 @@ function makeNodeComponent(nodeName) {
       overrides,
       onToggleTask: props.onToggleTask,
       forNode: nodeName,
+      onDelete: props.onDelete,
     });
   };
   if (nodeName === "root") {

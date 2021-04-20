@@ -14,7 +14,7 @@ import {
   classNames,
   createPlasmicElementProxy,
   deriveRenderOpts,
-  ensureGlobalVariants
+  ensureGlobalVariants,
 } from "@plasmicapp/react-web";
 import { ThemeContext } from "./PlasmicGlobalVariant__Theme"; // plasmic-import: Po2-1Vqdro6aE/globalVariant
 import "@plasmicapp/react-web/lib/plasmic.css";
@@ -27,10 +27,22 @@ export const PlasmicHeader__VariantProps = new Array("state");
 export const PlasmicHeader__ArgProps = new Array();
 
 function PlasmicHeader__RenderFunc(props) {
-  const { variants, args, overrides, forNode } = props;
+  const { variants, args, overrides, forNode, onEnterTask } = props;
   const globalVariants = ensureGlobalVariants({
-    theme: React.useContext(ThemeContext)
+    theme: React.useContext(ThemeContext),
   });
+  const [task, setTask] = React.useState("");
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onEnterTask(task);
+      setTask("");
+    }
+  };
+
+  const onInputChange = (e) => {
+    setTask(e.target.value);
+  };
 
   return (
     <div
@@ -59,7 +71,7 @@ function PlasmicHeader__RenderFunc(props) {
             variants,
             "state",
             "empty"
-          )
+          ),
         }
       )}
     >
@@ -67,7 +79,7 @@ function PlasmicHeader__RenderFunc(props) {
         data-plasmic-name={"box"}
         data-plasmic-override={overrides.box}
         className={classNames(defaultcss.all, sty.box, {
-          [sty.box__state_empty]: hasVariant(variants, "state", "empty")
+          [sty.box__state_empty]: hasVariant(variants, "state", "empty"),
         })}
       >
         {(hasVariant(variants, "state", "empty") ? false : true) ? (
@@ -88,7 +100,7 @@ function PlasmicHeader__RenderFunc(props) {
                 "allChecked"
               ),
 
-              [sty.img__state_empty]: hasVariant(variants, "state", "empty")
+              [sty.img__state_empty]: hasVariant(variants, "state", "empty"),
             })}
             role={"img"}
             src={
@@ -116,13 +128,13 @@ function PlasmicHeader__RenderFunc(props) {
             "allChecked"
           ),
 
-          [sty.textbox__state_empty]: hasVariant(variants, "state", "empty")
+          [sty.textbox__state_empty]: hasVariant(variants, "state", "empty"),
         })}
         placeholder={"What needs to be done?"}
         type={"text"}
-        value={
-          hasVariant(globalVariants, "theme", "dark") ? "My Task" : undefined
-        }
+        value={task}
+        onChange={onInputChange}
+        onKeyDown={handleKeyDown}
       />
     </div>
   );
@@ -132,7 +144,7 @@ const PlasmicDescendants = {
   headerContainer: ["headerContainer", "box", "img", "textbox"],
   box: ["box", "img"],
   img: ["img"],
-  textbox: ["textbox"]
+  textbox: ["textbox"],
 };
 
 function makeNodeComponent(nodeName) {
@@ -141,14 +153,15 @@ function makeNodeComponent(nodeName) {
       name: nodeName,
       descendantNames: [...PlasmicDescendants[nodeName]],
       internalArgPropNames: PlasmicHeader__ArgProps,
-      internalVariantPropNames: PlasmicHeader__VariantProps
+      internalVariantPropNames: PlasmicHeader__VariantProps,
     });
 
     return PlasmicHeader__RenderFunc({
       variants,
       args,
       overrides,
-      forNode: nodeName
+      onEnterTask: props.onEnterTask,
+      forNode: nodeName,
     });
   };
   if (nodeName === "headerContainer") {
@@ -169,7 +182,7 @@ export const PlasmicHeader = Object.assign(
     textbox: makeNodeComponent("textbox"),
     // Metadata about props expected for PlasmicHeader
     internalVariantProps: PlasmicHeader__VariantProps,
-    internalArgProps: PlasmicHeader__ArgProps
+    internalArgProps: PlasmicHeader__ArgProps,
   }
 );
 

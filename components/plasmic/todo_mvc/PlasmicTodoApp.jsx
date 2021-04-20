@@ -15,7 +15,7 @@ import {
   classNames,
   createPlasmicElementProxy,
   deriveRenderOpts,
-  ensureGlobalVariants
+  ensureGlobalVariants,
 } from "@plasmicapp/react-web";
 import Header from "../../Header"; // plasmic-import: _0O6g5SMsT_vH/component
 import Task from "../../Task"; // plasmic-import: SaqpK8Hg2PR3p/component
@@ -30,10 +30,58 @@ export const PlasmicTodoApp__VariantProps = new Array("state");
 
 export const PlasmicTodoApp__ArgProps = new Array();
 
+/*
+<Task
+                    className={classNames("__wab_instance", sty.task__eNe9U, {
+                      [sty.task__global_theme_dark__eNe9Ub5OmI]: hasVariant(
+                        globalVariants,
+                        "theme",
+                        "dark"
+                      ),
+
+                      [sty.task__state_empty__eNe9U3BGXu]: hasVariant(
+                        variants,
+                        "state",
+                        "empty"
+                      ),
+                    })}
+                  >
+                    {"Some kind of text here"}
+                  </Task>
+
+                  <Task
+                    className={classNames("__wab_instance", sty.task__sfdaa, {
+                      [sty.task__global_theme_dark__sfdaaB5OmI]: hasVariant(
+                        globalVariants,
+                        "theme",
+                        "dark"
+                      ),
+                    })}
+                    state={"editing"}
+                  >
+                    {"Some kind of text here"}
+                  </Task>
+
+                  <Task
+                    className={classNames("__wab_instance", sty.task__ts4Oo)}
+                    state={"checked"}
+                  >
+                    {"Some kind of text here"}
+                  </Task>
+
+                  <Task
+                    className={classNames("__wab_instance", sty.task__tZ8JE)}
+                  >
+                    {"I have a task to do something that takes a long time"}
+                  </Task>
+
+*/
+
 function PlasmicTodoApp__RenderFunc(props) {
   const { variants, args, overrides, forNode } = props;
+  const [tasks, setTasks] = React.useState([]);
   const globalVariants = ensureGlobalVariants({
-    theme: React.useContext(ThemeContext)
+    theme: React.useContext(ThemeContext),
   });
 
   return (
@@ -59,7 +107,7 @@ function PlasmicTodoApp__RenderFunc(props) {
                 "dark"
               ),
 
-              [sty.root__state_empty]: hasVariant(variants, "state", "empty")
+              [sty.root__state_empty]: hasVariant(variants, "state", "empty"),
             }
           )}
         >
@@ -75,7 +123,7 @@ function PlasmicTodoApp__RenderFunc(props) {
                   globalVariants,
                   "theme",
                   "dark"
-                )
+                ),
               }
             )}
           >
@@ -88,7 +136,7 @@ function PlasmicTodoApp__RenderFunc(props) {
                 globalVariants,
                 "theme",
                 "dark"
-              )
+              ),
             })}
           >
             <div
@@ -99,7 +147,7 @@ function PlasmicTodoApp__RenderFunc(props) {
                   globalVariants,
                   "theme",
                   "dark"
-                )
+                ),
               })}
             >
               <Header
@@ -116,11 +164,21 @@ function PlasmicTodoApp__RenderFunc(props) {
                     variants,
                     "state",
                     "empty"
-                  )
+                  ),
                 })}
                 state={
                   hasVariant(variants, "state", "empty") ? "empty" : undefined
                 }
+                onEnterTask={(task) => {
+                  setTasks([
+                    ...tasks,
+                    {
+                      id: tasks.length + 1,
+                      completed: false,
+                      value: task,
+                    },
+                  ]);
+                }}
               />
 
               {(hasVariant(variants, "state", "empty") ? false : true) ? (
@@ -132,52 +190,32 @@ function PlasmicTodoApp__RenderFunc(props) {
                       variants,
                       "state",
                       "empty"
-                    )
+                    ),
                   })}
                 >
-                  <Task
-                    className={classNames("__wab_instance", sty.task__eNe9U, {
-                      [sty.task__global_theme_dark__eNe9Ub5OmI]: hasVariant(
-                        globalVariants,
-                        "theme",
-                        "dark"
-                      ),
+                  {tasks.map((task) => {
+                    return (
+                      <Task
+                        className={classNames(
+                          "__wab_instance",
+                          sty.task__tZ8JE
+                        )}
+                        state={task.completed ? "checked" : undefined}
+                        onToggleTask={() => {
+                          const newTasks = [...tasks];
+                          const changes = newTasks.find(
+                            (t) => t.id === task.id
+                          );
 
-                      [sty.task__state_empty__eNe9U3BGXu]: hasVariant(
-                        variants,
-                        "state",
-                        "empty"
-                      )
-                    })}
-                  >
-                    {"Some kind of text here"}
-                  </Task>
+                          changes.completed = !changes.completed;
 
-                  <Task
-                    className={classNames("__wab_instance", sty.task__sfdaa, {
-                      [sty.task__global_theme_dark__sfdaaB5OmI]: hasVariant(
-                        globalVariants,
-                        "theme",
-                        "dark"
-                      )
-                    })}
-                    state={"editing"}
-                  >
-                    {"Some kind of text here"}
-                  </Task>
-
-                  <Task
-                    className={classNames("__wab_instance", sty.task__ts4Oo)}
-                    state={"checked"}
-                  >
-                    {"Some kind of text here"}
-                  </Task>
-
-                  <Task
-                    className={classNames("__wab_instance", sty.task__tZ8JE)}
-                  >
-                    {"I have a task to do something that takes a long time"}
-                  </Task>
+                          setTasks([...newTasks]);
+                        }}
+                      >
+                        {task.value}
+                      </Task>
+                    );
+                  })}
                 </div>
               ) : null}
               {(hasVariant(variants, "state", "empty") ? false : true) ? (
@@ -189,7 +227,7 @@ function PlasmicTodoApp__RenderFunc(props) {
                       variants,
                       "state",
                       "empty"
-                    )
+                    ),
                   })}
                   count={"2"}
                   state={["hasCompleted"]}
@@ -206,7 +244,7 @@ function PlasmicTodoApp__RenderFunc(props) {
                     variants,
                     "state",
                     "empty"
-                  )
+                  ),
                 })}
               >
                 <div
@@ -215,7 +253,7 @@ function PlasmicTodoApp__RenderFunc(props) {
                       globalVariants,
                       "theme",
                       "dark"
-                    )
+                    ),
                   })}
                 />
 
@@ -225,7 +263,7 @@ function PlasmicTodoApp__RenderFunc(props) {
                       globalVariants,
                       "theme",
                       "dark"
-                    )
+                    ),
                   })}
                 />
               </div>
@@ -245,7 +283,7 @@ const PlasmicDescendants = {
     "header",
     "tasksContainer",
     "footer",
-    "fakeStack"
+    "fakeStack",
   ],
 
   appTitle: ["appTitle"],
@@ -253,7 +291,7 @@ const PlasmicDescendants = {
   header: ["header"],
   tasksContainer: ["tasksContainer"],
   footer: ["footer"],
-  fakeStack: ["fakeStack"]
+  fakeStack: ["fakeStack"],
 };
 
 function makeNodeComponent(nodeName) {
@@ -262,14 +300,14 @@ function makeNodeComponent(nodeName) {
       name: nodeName,
       descendantNames: [...PlasmicDescendants[nodeName]],
       internalArgPropNames: PlasmicTodoApp__ArgProps,
-      internalVariantPropNames: PlasmicTodoApp__VariantProps
+      internalVariantPropNames: PlasmicTodoApp__VariantProps,
     });
 
     return PlasmicTodoApp__RenderFunc({
       variants,
       args,
       overrides,
-      forNode: nodeName
+      forNode: nodeName,
     });
   };
   if (nodeName === "root") {
@@ -293,7 +331,7 @@ export const PlasmicTodoApp = Object.assign(
     fakeStack: makeNodeComponent("fakeStack"),
     // Metadata about props expected for PlasmicTodoApp
     internalVariantProps: PlasmicTodoApp__VariantProps,
-    internalArgProps: PlasmicTodoApp__ArgProps
+    internalArgProps: PlasmicTodoApp__ArgProps,
   }
 );
 

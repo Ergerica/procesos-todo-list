@@ -15,7 +15,7 @@ import {
   classNames,
   createPlasmicElementProxy,
   deriveRenderOpts,
-  ensureGlobalVariants
+  ensureGlobalVariants,
 } from "@plasmicapp/react-web";
 import { ThemeContext } from "./PlasmicGlobalVariant__Theme"; // plasmic-import: Po2-1Vqdro6aE/globalVariant
 import "@plasmicapp/react-web/lib/plasmic.css";
@@ -28,9 +28,9 @@ export const PlasmicTask__VariantProps = new Array("state");
 export const PlasmicTask__ArgProps = new Array("children");
 
 function PlasmicTask__RenderFunc(props) {
-  const { variants, args, overrides, forNode } = props;
+  const { variants, args, overrides, forNode, onToggleTask } = props;
   const globalVariants = ensureGlobalVariants({
-    theme: React.useContext(ThemeContext)
+    theme: React.useContext(ThemeContext),
   });
 
   return (
@@ -50,7 +50,7 @@ function PlasmicTask__RenderFunc(props) {
         [sty.root__state_editing]: hasVariant(variants, "state", "editing"),
         [sty.root__state_editing_global_theme_dark]:
           hasVariant(variants, "state", "editing") &&
-          hasVariant(globalVariants, "theme", "dark")
+          hasVariant(globalVariants, "theme", "dark"),
       })}
     >
       <div
@@ -63,7 +63,7 @@ function PlasmicTask__RenderFunc(props) {
 
           [sty.box__state_editing_global_theme_dark__dxfYlRsQHeB5OmI]:
             hasVariant(variants, "state", "editing") &&
-            hasVariant(globalVariants, "theme", "dark")
+            hasVariant(globalVariants, "theme", "dark"),
         })}
       >
         {(hasVariant(variants, "state", "editing") ? false : true) ? (
@@ -82,8 +82,9 @@ function PlasmicTask__RenderFunc(props) {
                 variants,
                 "state",
                 "editing"
-              )
+              ),
             })}
+            onClick={onToggleTask}
           >
             {(hasVariant(variants, "state", "checked") ? true : false) ? (
               <img
@@ -104,7 +105,7 @@ function PlasmicTask__RenderFunc(props) {
                     variants,
                     "state",
                     "editing"
-                  )
+                  ),
                 })}
                 role={"img"}
                 src={
@@ -134,7 +135,7 @@ function PlasmicTask__RenderFunc(props) {
 
           [sty.box__state_editing_global_theme_dark__h8H6GRsQHeB5OmI]:
             hasVariant(variants, "state", "editing") &&
-            hasVariant(globalVariants, "theme", "dark")
+            hasVariant(globalVariants, "theme", "dark"),
         })}
       >
         {(hasVariant(variants, "state", "editing") ? false : true) ? (
@@ -150,7 +151,7 @@ function PlasmicTask__RenderFunc(props) {
                 variants,
                 "state",
                 "editing"
-              )
+              ),
             })}
           >
             <p.PlasmicSlot
@@ -176,7 +177,7 @@ function PlasmicTask__RenderFunc(props) {
                   variants,
                   "state",
                   "editing"
-                )
+                ),
               })}
             />
           </div>
@@ -194,7 +195,7 @@ function PlasmicTask__RenderFunc(props) {
 
               [sty.textbox__state_editing_global_theme_dark]:
                 hasVariant(variants, "state", "editing") &&
-                hasVariant(globalVariants, "theme", "dark")
+                hasVariant(globalVariants, "theme", "dark"),
             })}
             placeholder={"Some placeholder text"}
             type={"text"}
@@ -207,7 +208,7 @@ function PlasmicTask__RenderFunc(props) {
                 variants,
                 "state",
                 "editing"
-              )
+              ),
             })}
           >
             <button
@@ -222,7 +223,7 @@ function PlasmicTask__RenderFunc(props) {
                     variants,
                     "state",
                     "editing"
-                  )
+                  ),
                 }
               )}
             >
@@ -239,7 +240,7 @@ const PlasmicDescendants = {
   root: ["root", "img", "textbox", "button"],
   img: ["img"],
   textbox: ["textbox"],
-  button: ["button"]
+  button: ["button"],
 };
 
 function makeNodeComponent(nodeName) {
@@ -248,14 +249,15 @@ function makeNodeComponent(nodeName) {
       name: nodeName,
       descendantNames: [...PlasmicDescendants[nodeName]],
       internalArgPropNames: PlasmicTask__ArgProps,
-      internalVariantPropNames: PlasmicTask__VariantProps
+      internalVariantPropNames: PlasmicTask__VariantProps,
     });
 
     return PlasmicTask__RenderFunc({
       variants,
       args,
       overrides,
-      forNode: nodeName
+      onToggleTask: props.onToggleTask,
+      forNode: nodeName,
     });
   };
   if (nodeName === "root") {
@@ -276,7 +278,7 @@ export const PlasmicTask = Object.assign(
     button: makeNodeComponent("button"),
     // Metadata about props expected for PlasmicTask
     internalVariantProps: PlasmicTask__VariantProps,
-    internalArgProps: PlasmicTask__ArgProps
+    internalArgProps: PlasmicTask__ArgProps,
   }
 );
 

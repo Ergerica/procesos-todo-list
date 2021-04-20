@@ -1,0 +1,179 @@
+{
+  "props": [
+    {
+      "name": "app bg",
+      "type": "color",
+      "value": "#ffffff",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "XAxX7-cXFCLSM"
+      }
+    },
+    {
+      "name": "app bg dark",
+      "type": "color",
+      "value": "rgb(34,34,34)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "fMNWWDlQgya3o"
+      }
+    },
+    {
+      "name": "border gray light",
+      "type": "color",
+      "value": "rgb(230,230,230)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "dBXumsLU0UMQw"
+      }
+    },
+    {
+      "name": "border gray light dark",
+      "type": "color",
+      "value": "rgb(48,48,48)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "tb-iSaWwvfIQQ"
+      }
+    },
+    {
+      "name": "footer-text",
+      "type": "color",
+      "value": "rgb(119,119,119)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "uHzh6cTKQLi8s"
+      }
+    },
+    {
+      "name": "header",
+      "type": "color",
+      "value": "rgba(175,47,47,0.15)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "9Q_Q2lKeafIRY"
+      }
+    },
+    {
+      "name": "header dark",
+      "type": "color",
+      "value": "rgb(113,101,101)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "OvUSbDzxwBai7"
+      }
+    },
+    {
+      "name": "input placeholder",
+      "type": "color",
+      "value": "rgb(230,230,230)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "U_oPAImxNPda5"
+      }
+    },
+    {
+      "name": "page bg",
+      "type": "color",
+      "value": "rgb(245,245,245)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "akgCGV_gHoODt"
+      }
+    },
+    {
+      "name": "page bg dark",
+      "type": "color",
+      "value": "rgb(0,0,0)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "AQQE1He8iLUFL"
+      }
+    },
+    {
+      "name": "placeholder",
+      "type": "color",
+      "value": "rgb(230,230,230)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "whaPXbv8bebm9"
+      }
+    },
+    {
+      "name": "placeholder-dark",
+      "type": "color",
+      "value": "rgb(79,79,79)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "Y6WKACQItvr7T"
+      }
+    },
+    {
+      "name": "task-text",
+      "type": "color",
+      "value": "rgb(83,83,83)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "2DbKh4BOfIQX_"
+      }
+    },
+    {
+      "name": "task-text-dark",
+      "type": "color",
+      "value": "rgb(234,234,234)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "ZyAAB2GeW_spp"
+      }
+    },
+    {
+      "name": "task-text-dim",
+      "type": "color",
+      "value": "rgb(230,230,230)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "q7wayrbf6MY8L"
+      }
+    },
+    {
+      "name": "task-text-dim-dark",
+      "type": "color",
+      "value": "rgb(79,79,79)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "IR71A1OqljFEp"
+      }
+    },
+    {
+      "name": "unselected chevron",
+      "type": "color",
+      "value": "rgb(230,230,230)",
+      "category": "color",
+      "meta": {
+        "projectId": "vvEKhV4X4yWCLXhriishBU",
+        "id": "jQ7Rg36YyBw2G"
+      }
+    }
+  ],
+  "global": {
+    "meta": {
+      "source": "plasmic.app"
+    }
+  }
+}
